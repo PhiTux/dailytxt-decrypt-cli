@@ -9,6 +9,6 @@ It's <ins>not</ins> a tool to *break* the encryption! You still need to know you
 You can choose to either decrypt all logs ever written at once or just a specific month.
 
 ## Download and start
-Download it from the release-area here on github (or compile it by yourself).
+Download it from [the release-area](https://github.com/PhiTux/dailytxt-decrypt-cli/releases) here on github (or compile it by yourself).
 
 Find all the necessary commands in the CLI by running `./dailytxt-decrypt-cli --help`.
