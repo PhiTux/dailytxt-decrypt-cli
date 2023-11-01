@@ -60,7 +60,6 @@ fn main() {
         std::process::exit(1);
     }
 
-    //TODO check if to_path is empty or does not yet exist (which is good!)
     println!("-> Calculating encryption key...");
 
     // get user_id and encryption_key
