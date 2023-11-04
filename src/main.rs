@@ -4,6 +4,13 @@ mod config;
 mod encryption;
 mod filesystem;
 
+fn get_exec_name() -> Option<String> {
+    std::env::current_exe()
+        .ok()
+        .and_then(|pb| pb.file_name().map(|s| s.to_os_string()))
+        .and_then(|s| s.into_string().ok())
+}
+
 fn help() {
     println!("\n
 ******************************************************
@@ -18,27 +25,29 @@ The history will always be omitted!
 
 Allowed commands:
 
-dailytxt_decrypt -h 
+{} -h 
     Show this help.
 
 {}
-dailytxt_decrypt [-a | --all] [--to-single-file] (-u | --user) <username> (-p | --password) <password> <from_path> <to_path>
+{} [-a | --all] [--to-single-file] (-u | --user) <username> (-p | --password) <password> <from_path> <to_path>
     Decrypt all files in <from_path> and save them in <to_path>. 
     The filesystem in <from_path> must be the same as originally stored on the server.
     If --to-single-file is set, all files will be saved in one single file, nicely formatted. The history of each log will be omitted.
     Without --to-single-file, the original file structure will be restored.
 
 {}   
-dailytxt_decrypt (-s | --single) (-m | --month) <month> (-y | --year) <year> (-u | --user) <username> (-p | --password) <password> <from_path> <to_path>
+{} (-s | --single) (-m | --month) <month> (-y | --year) <year> (-u | --user) <username> (-p | --password) <password> <from_path> <to_path>
     Decrypt a single file specified by month and year, which is found in the filesystem in <from_path> and save it in <to_path>.
 
 {}
     Username and password MUST be given. Password can also be a backup code.
     <from_path> and <to_path> must be the last two parameters in exactly this order.
-    ", "Decrypt all files".bold().underline(), "Decrypt a specific month".bold().underline(), "Important".bold().underline());
+    ", get_exec_name().unwrap(), "Decrypt all files".bold().underline(), get_exec_name().unwrap(), "Decrypt a specific month".bold().underline(), get_exec_name().unwrap(), "Important".bold().underline());
 }
 
 fn main() {
+    println!("{}", get_exec_name().unwrap());
+
     let args: Vec<String> = env::args().collect();
 
     let config = config::Config::new(&args).unwrap_or_else(|err| {
@@ -54,9 +63,7 @@ fn main() {
     }
 
     if !filesystem::path_exists(&config.from_path) {
-        println!(
-            "Source path does not exist!\n\nYou can use 'dailytxt_decrypt -h' to show the help."
-        );
+        println!("Source path does not exist!\n\nYou can use the option '-h' to show the help.");
         std::process::exit(1);
     }
 
