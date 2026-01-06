@@ -1,3 +1,6 @@
+> [!WARNING]
+> This only works for the old dailytxt 1.x.x versions. It's no longer maintained.
+
 ## What is it?
 A <ins>minimal CLI program to decrypt your dailytxt files</ins>, even if the server is shut down or not working any longer.
 
